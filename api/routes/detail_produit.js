@@ -25,6 +25,19 @@ router.get("/vehicules/:id/detail_produits", (req, res) => {
     .catch((err) => res.status(404).json(err));
 });
 
+
+router.get("/detail_produits", (req, res) => {
+  db.detail_produit
+    .findAll({
+      include: [db.vehicule, db.client, db.produit],
+    })
+    .then((allDetails) => {
+      return res.send(allDetails);
+    })
+    .catch((err) => res.status(404).json(err));
+});
+
+
 router.post(
   "/vehicules/:id/detail_produits",
   upload.single("photo_bon"),
